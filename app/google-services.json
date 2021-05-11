@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "47859393914",
+    "firebase_url": "https://ping02-a6b0f-default-rtdb.firebaseio.com",
+    "project_id": "ping02-a6b0f",
+    "storage_bucket": "ping02-a6b0f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47859393914:android:f6e7b64469a58f0684a2c3",
+        "android_client_info": {
+          "package_name": "com.example.ping02"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "47859393914-dlm8v5n43ov65be7ua6gnm88sr8q7ca3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHqE_J7svYFWqlyC7qmx_7r5MAE0U4JTw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "47859393914-dlm8v5n43ov65be7ua6gnm88sr8q7ca3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
