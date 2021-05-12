@@ -17,7 +17,10 @@ import com.google.firebase.database.ValueEventListener;
 
 public class mainpage extends AppCompatActivity {
 
-    private ImageView settings;
+    private FloatingActionButton settings;
+    private FloatingActionButton testcase;
+    private ImageView chatdrawer;
+    
     FirebaseUser firebaseUser;
     DatabaseReference databaseReference;
 
@@ -26,8 +29,23 @@ public class mainpage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainpage);
 
-        settings = findViewById(R.id.settings);
+     
+        chatdrawer = findViewById(R.id.chatmenu);
+        chatdrawer.setOnClickListener(v -> showchatdrawer());
+        testcase = findViewById((R.id.floatingActionButton2));
+        testcase.setOnClickListener(v -> showchatbox());
+        settings = findViewById(R.id.settingsfbutton);
         settings.setOnClickListener(v -> showsettingspage());
+    }
+
+    private void showchatdrawer() {
+        Intent intenttochatdrawer = new Intent(this, chatdrawers.class);
+        startActivity(intenttochatdrawer);
+    }
+
+    private void showchatbox() {
+        Intent intenttochatbox = new Intent( this, chatinterface.class);
+        startActivity(intenttochatbox);
     }
     public void showsettingspage(){
         Intent intenttosettings = new Intent(this, settings.class);
