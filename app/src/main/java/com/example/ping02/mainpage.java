@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -20,7 +21,6 @@ public class mainpage extends AppCompatActivity {
     private FloatingActionButton settings;
     private FloatingActionButton testcase;
     private ImageView chatdrawer;
-    
     FirebaseUser firebaseUser;
     DatabaseReference databaseReference;
 
@@ -29,7 +29,20 @@ public class mainpage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainpage);
 
-     
+        /*firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+        databaseReference= FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });*/
         chatdrawer = findViewById(R.id.chatmenu);
         chatdrawer.setOnClickListener(v -> showchatdrawer());
         testcase = findViewById((R.id.floatingActionButton2));
@@ -47,6 +60,7 @@ public class mainpage extends AppCompatActivity {
         Intent intenttochatbox = new Intent( this, chatinterface.class);
         startActivity(intenttochatbox);
     }
+
     public void showsettingspage(){
         Intent intenttosettings = new Intent(this, settings.class);
         startActivity(intenttosettings);

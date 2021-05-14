@@ -69,6 +69,8 @@ public class login extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if(task.isSuccessful()){
                                         if(auth.getCurrentUser().isEmailVerified()){
+                                            Toast.makeText(login.this, "Login Successful aageti nod pa", Toast.LENGTH_SHORT).show();
+
                                             Intent intent=new Intent(login.this, welcomepage.class);
                                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                             startActivity(intent);

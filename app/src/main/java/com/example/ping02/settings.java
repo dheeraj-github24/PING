@@ -45,16 +45,13 @@ public class settings extends AppCompatActivity {
 
     private ImageView designationedit;
     private EditText designationvar;
-    private ImageView fullnameedit;
-    private EditText fullnamevar;
-    private ImageView aboutedit;
-    private EditText aboutuservar;
     private Button logout;
     private ImageButton profilepic;
 
     private Uri uri;
     private FirebaseStorage storage;
     private StorageReference sr;
+    private FirebaseAuth fbAuth;
 
     FirebaseUser firebaseUser;
     DatabaseReference databaseReference;
@@ -65,12 +62,7 @@ public class settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         designationedit=findViewById(R.id.designationedit);
-        fullnameedit=findViewById(R.id.fullnameedit);
-        aboutedit=findViewById(R.id.aboutedit);
-        designationvar=findViewById(R.id.designation);      //The designation from the database has to be edited here, No new Editext field should be made
-        fullnamevar=findViewById(R.id.fullname);            //The fullname from the database has to be edited here, No new Editext field should be made
-        aboutuservar=findViewById(R.id.aboutuser);          //The aboutuser from the database has to be edited here, No new Editext field should be made
-        logout=findViewById(R.id.logout);
+
         profilepic=findViewById(R.id.profilepicture);
 
         storage=FirebaseStorage.getInstance();
@@ -83,32 +75,19 @@ public class settings extends AppCompatActivity {
             }
         });
 
+        logout=findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(settings.this, MainActivity.class));
                 finish();
+                FirebaseAuth.getInstance().signOut();
             }
         });
         designationedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 designationvar.setVisibility(View.VISIBLE);
-            }
-        });
-
-        fullnameedit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fullnamevar.setVisibility(View.VISIBLE);
-            }
-        });
-
-        aboutedit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                aboutuservar.setVisibility(View.VISIBLE);
             }
         });
 
