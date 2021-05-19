@@ -18,6 +18,7 @@
         <activity android:name=".mainpage" />
         <activity android:name=".forgotpassword" />
         <activity android:name=".signup" />
+        <activity android:name=".chatdrawers" />
         <activity android:name=".login" />
         <activity android:name=".MainActivity">
             <intent-filter>
