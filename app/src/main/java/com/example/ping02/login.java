@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class login extends AppCompatActivity {
 
-
+//im doing changes for checking git commands
      Button submit;
      TextView forgotpass;
      TextView signupfromlogin;
