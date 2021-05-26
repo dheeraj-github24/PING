@@ -13,6 +13,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 // new comment added here
+
+    //ashish check!!!!!!!!!!!!!
     Button login, register,email_verify;
     TextView verify_msg;
 
