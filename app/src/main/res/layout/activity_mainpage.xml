@@ -40,20 +40,6 @@
         app:layout_constraintVertical_bias="0.975"
         app:srcCompat="@android:drawable/ic_menu_search" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:backgroundTint="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.954"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView10"
-        app:layout_constraintVertical_bias="0.874"
-        app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
-
     <TextView
         android:id="@+id/usernameautologin"
         android:layout_width="177dp"
@@ -96,7 +82,7 @@
         app:layout_constraintHorizontal_bias="0.957"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView10"
-        app:layout_constraintVertical_bias="0.768"
+        app:layout_constraintVertical_bias="0.850"
         app:maxImageSize="35dp"
         app:srcCompat="@android:drawable/ic_menu_info_details" />
 

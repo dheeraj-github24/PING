@@ -13,13 +13,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ping02">
-        <activity android:name=".welcomepage"></activity>
+        <activity android:name=".welcomepage" />
         <activity android:name=".settings" />
         <activity android:name=".mainpage" />
         <activity android:name=".forgotpassword" />
         <activity android:name=".signup" />
-        <activity android:name=".chatdrawers" />
         <activity android:name=".login" />
+        <activity android:name=".chatdrawers" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

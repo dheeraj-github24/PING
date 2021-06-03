@@ -39,9 +39,9 @@ import java.util.HashMap;
 
 public class signup extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-     Button dateText;
-     Button submit;
-     ImageView googlesignup;
+    Button dateText;
+    Button submit;
+    ImageView googlesignup;
 
     EditText fname,lname,email,new_password,con_password;
     FirebaseAuth auth;
@@ -98,7 +98,7 @@ public class signup extends AppCompatActivity implements DatePickerDialog.OnDate
                 String txt_conpassword=con_password.getText().toString();
 
                 if(TextUtils.isEmpty(txt_fname) || TextUtils.isEmpty(txt_lname) || TextUtils.isEmpty(txt_email)
-                || TextUtils.isEmpty(txt_newpassword) || TextUtils.isEmpty(txt_conpassword)){
+                        || TextUtils.isEmpty(txt_newpassword) || TextUtils.isEmpty(txt_conpassword)){
                     Toast.makeText(signup.this, "All fields are required", Toast.LENGTH_SHORT).show();
                 }else if(txt_newpassword.length()<8){
                     Toast.makeText(signup.this, "Password must be of at least 8 characters", Toast.LENGTH_SHORT).show();
@@ -116,7 +116,7 @@ public class signup extends AppCompatActivity implements DatePickerDialog.OnDate
         googlesignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               signIn();
+                signIn();
             }
         });
 
@@ -225,7 +225,7 @@ public class signup extends AppCompatActivity implements DatePickerDialog.OnDate
                             hashMap.put("Id",userid);
                             hashMap.put("Firstname",fname);
                             hashMap.put("Lastname",lname);
-                           // hashMap.put("Date of Birth",dateText);
+                            // hashMap.put("Date of Birth",dateText);
                             hashMap.put("Email",email);
                             hashMap.put("Password",password);
                             hashMap.put("ImageURL","default");

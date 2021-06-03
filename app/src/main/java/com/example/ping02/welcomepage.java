@@ -11,10 +11,6 @@ import java.util.TimerTask;
 
 public class welcomepage extends AppCompatActivity {
 
-
-    //Aur batao bhai!
-    //GFG3
-
     Timer timer;
     private TextView test;
     @Override

@@ -10,15 +10,25 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
-// new comment added here
 
-    //ashish check!!!!!!!!!!!!!
     Button login, register,email_verify;
     TextView verify_msg;
 
     FirebaseUser fu;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        fu= FirebaseAuth.getInstance().getCurrentUser();
+        if(fu!=null){
+            Intent intent=new Intent(MainActivity.this, welcomepage.class);
+            startActivity(intent);
+            finish();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +60,5 @@ public class MainActivity extends AppCompatActivity {
     public void showregisterpage(){
         Intent intenttoregister = new Intent(this, signup.class);
         startActivity(intenttoregister);
-
     }
 }
