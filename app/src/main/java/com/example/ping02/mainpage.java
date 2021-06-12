@@ -28,7 +28,9 @@ public class mainpage extends AppCompatActivity {
     private ImageView chatdrawer;
     private CircleImageView prof_img;
     private TextView username;
-
+    private FloatingActionButton search;                //
+    private FloatingActionButton trial;                 //
+    
     FirebaseAuth mAuth;
     FirebaseUser firebaseUser;
     DatabaseReference databaseReference;
@@ -44,6 +46,18 @@ public class mainpage extends AppCompatActivity {
         settings.setOnClickListener(v -> showsettingspage());
         prof_img=findViewById(R.id.profilepicturechatdrawer);
         username=findViewById(R.id.usernameautologin);
+                
+        search=findViewById(R.id.searchfloatingbutton);                 //
+
+        trial=findViewById(R.id.floatingActionButton2);                 //
+        trial.setOnClickListener(new View.OnClickListener() {           //
+            @Override                                                   //
+            public void onClick(View v) {                               //
+                showchatinterface();                                    //
+            }                                                           //   
+
+
+        });                                                             //
 
 //        firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
 //        databaseReference=FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
@@ -68,12 +82,20 @@ public class mainpage extends AppCompatActivity {
 
     }
 
+    private void showchatinterface() {                                                  //
+        Intent intenttochatinterface = new Intent(this, chatinterface2.class);          //
+        startActivity(intenttochatinterface);                                           //
+    }                                                                                   //
 
+    private void showsearchbar() {                                                      //
+        Intent intenttosearchbar = new Intent(this, searchforglobal.class);             //
+        startActivity(intenttosearchbar);                                               //
+    }                                                                                   //
 
-    private void showchatdrawer() {
-        Intent intenttochatdrawer = new Intent(this, chatdrawers.class);
-        startActivity(intenttochatdrawer);
-    }
+    private void showchatdrawer() {                                                    
+        Intent intenttochatdrawer = new Intent(this, chatdrawers.class);               
+        startActivity(intenttochatdrawer);                                              
+    }   
 
     public void showsettingspage(){
         Intent intenttosettings = new Intent(this, settings.class);
