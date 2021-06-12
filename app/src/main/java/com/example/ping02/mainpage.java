@@ -29,6 +29,7 @@ public class mainpage extends AppCompatActivity {
     private CircleImageView prof_img;
     private TextView username;
 
+    FirebaseAuth mAuth;
     FirebaseUser firebaseUser;
     DatabaseReference databaseReference;
 
@@ -44,28 +45,30 @@ public class mainpage extends AppCompatActivity {
         prof_img=findViewById(R.id.profilepicturechatdrawer);
         username=findViewById(R.id.usernameautologin);
 
-        firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference=FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+//        firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
+//        databaseReference=FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user=snapshot.getValue(User.class);
-                username.setText(user.getFname());
-                if(user.getImageURL().equals("default")){
-                    prof_img.setImageResource(R.mipmap.ic_launcher);
-                }else {
-                    Glide.with(mainpage.this).load(user.getImageURL()).into(prof_img);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                User user=snapshot.getValue(User.class);
+//                username.setText(user.getFname());
+//                if(user.getImageURL().equals("default")){
+//                    prof_img.setImageResource(R.mipmap.ic_launcher);
+//                }else {
+//                    Glide.with(mainpage.this).load(user.getImageURL()).into(prof_img);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
     }
+
+
 
     private void showchatdrawer() {
         Intent intenttochatdrawer = new Intent(this, chatdrawers.class);

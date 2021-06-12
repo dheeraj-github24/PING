@@ -17,17 +17,21 @@ public class MainActivity extends AppCompatActivity {
     Button login, register,email_verify;
     TextView verify_msg;
 
+    FirebaseAuth mAuth;
     FirebaseUser fu;
 
     @Override
     protected void onStart() {
         super.onStart();
+
         fu= FirebaseAuth.getInstance().getCurrentUser();
         if(fu!=null){
             Intent intent=new Intent(MainActivity.this, welcomepage.class);
             startActivity(intent);
             finish();
         }
+
+
     }
 
     @Override
@@ -51,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     public void showloginpage(){
         Intent intenttologin = new Intent(this, login.class);
         startActivity(intenttologin);
