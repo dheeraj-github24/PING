@@ -57,6 +57,13 @@ public class mainpage extends AppCompatActivity {
 
         });                                                             //
 
+        search.setOnClickListener(new View.OnClickListener() {          //
+            @Override                                                   //
+            public void onClick(View v) {                               //  
+                showsearchbar();                                        //
+            }
+
+        });
 //        firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
 //        databaseReference=FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
