@@ -70,8 +70,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023" />
+    
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+   <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/settingsfbutton"
         android:layout_width="57dp"
         android:layout_height="57dp"
@@ -82,7 +83,7 @@
         app:layout_constraintHorizontal_bias="0.957"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView10"
-        app:layout_constraintVertical_bias="0.850"
+        app:layout_constraintVertical_bias="0.768"
         app:maxImageSize="35dp"
         app:srcCompat="@android:drawable/ic_menu_info_details" />
 
