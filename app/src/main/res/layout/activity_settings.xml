@@ -189,6 +189,20 @@
             app:layout_constraintStart_toEndOf="@+id/textView17"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.618" />
+        
+          <Button
+            android:id="@+id/UpdateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="#00FFFFFF"
+            app:iconTint="#02FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.717" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
