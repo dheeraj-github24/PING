@@ -45,9 +45,10 @@ import static java.security.AccessController.getContext;
 public class settings extends AppCompatActivity {
 
     private ImageView designationedit;
-    private EditText designationvar;
+    private EditText infoDesignation;                           //
     private Button logout;
     private ImageButton profilepic;
+    private Button UpdateDesignation;                          //
 
     private Uri uri;
     private FirebaseStorage storage;
@@ -63,9 +64,10 @@ public class settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         designationedit=findViewById(R.id.designationedit);
-
+        infoDesignation=findViewById(R.id.info_designation);    //
         profilepic=findViewById(R.id.profilepicture);
-
+        UpdateDesignation=findViewById(R.id.UpdateButton);      //
+        
         storage=FirebaseStorage.getInstance();
         sr=storage.getReference();
 
@@ -89,7 +91,7 @@ public class settings extends AppCompatActivity {
         designationedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                designationvar.setVisibility(View.VISIBLE);
+                infoDesignation.setVisibility(View.VISIBLE);
             }
         });
 
