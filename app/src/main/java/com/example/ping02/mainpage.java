@@ -59,10 +59,10 @@ public class mainpage extends AppCompatActivity {
 
         });                                                             //
 
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showsearchbar();
+        search.setOnClickListener(new View.OnClickListener() {          //
+            @Override                                                   //
+            public void onClick(View v) {                               //  
+                showsearchbar();                                        //
             }
 
         });
