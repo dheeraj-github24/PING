@@ -20,10 +20,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.ping02.Model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,6 +43,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 import static java.security.AccessController.getContext;
@@ -45,10 +51,13 @@ import static java.security.AccessController.getContext;
 public class settings extends AppCompatActivity {
 
     private ImageView designationedit;
-    private EditText infoDesignation;                           //
+    private EditText infoDesignation;
     private Button logout;
     private ImageButton profilepic;
-    private Button UpdateDesignation;                          //
+    private Button UpdateDesignation;
+    private TextView fname;
+    private TextView email;
+
 
     private Uri uri;
     private FirebaseStorage storage;
@@ -56,7 +65,7 @@ public class settings extends AppCompatActivity {
     private FirebaseAuth fbAuth;
 
     FirebaseUser firebaseUser;
-    DatabaseReference databaseReference;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +73,18 @@ public class settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         designationedit=findViewById(R.id.designationedit);
-        infoDesignation=findViewById(R.id.info_designation);    //
+        infoDesignation=findViewById(R.id.info_designation);
         profilepic=findViewById(R.id.profilepicture);
-        UpdateDesignation=findViewById(R.id.UpdateButton);      //
+        UpdateDesignation=findViewById(R.id.UpdateButton);
+        fname=findViewById(R.id.info_fullname);
+        email=findViewById(R.id.info_email);
         
         storage=FirebaseStorage.getInstance();
         sr=storage.getReference();
+
+        firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
+        String userid=firebaseUser.getUid();
+        reference= FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
         profilepic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +107,25 @@ public class settings extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 infoDesignation.setVisibility(View.VISIBLE);
+            }
+        });
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user=snapshot.getValue(User.class);
+                fname.setText(user.getFirstname());
+                email.setText(user.getEmail());
+                if(user.getImageURL().equals("default")){
+                    profilepic.setImageResource(R.mipmap.ic_launcher);
+                }else {
+                    Glide.with(settings.this).load(user.getImageURL()).into(profilepic);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 
@@ -120,29 +154,46 @@ public class settings extends AppCompatActivity {
         pd.setTitle("Uploading....");
         pd.show();
 
-        final String randomkey= UUID.randomUUID().toString();
-        StorageReference riversRef=sr.child("images/"+randomkey);
-        riversRef.putFile(uri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        pd.dismiss();
-                        Snackbar.make(findViewById(android.R.id.content),"Imgae Uploaded!",Snackbar.LENGTH_LONG).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        pd.dismiss();
-                        Toast.makeText(settings.this, "Failed to Upload!", Toast.LENGTH_LONG).show();
-                    }
-                })
-                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                        double progresspercent=(100.00*snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-                        pd.setMessage("Progress: "+(int)progresspercent+"%");
-                    }
-                });
+        if(uri!=null) {
+            final String randomkey = UUID.randomUUID().toString();
+            StorageReference riversRef = sr.child("images/" + randomkey);
+            riversRef.putFile(uri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            riversRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    if(task.isSuccessful()){
+                                        Uri downloadUri=task.getResult();
+                                        String mUri=downloadUri.toString();
+
+                                        reference=FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
+                                        HashMap<String, Object> map=new HashMap<>();
+                                        map.put("ImageURL",mUri);
+                                        reference.updateChildren(map);
+                                    }
+                                }
+                            });
+                            Snackbar.make(findViewById(android.R.id.content), "Imgae Uploaded!", Snackbar.LENGTH_LONG).show();
+                            pd.dismiss();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(settings.this, "Failed to Upload!", Toast.LENGTH_LONG).show();
+                            pd.dismiss();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                            double progresspercent = (100.00 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                            pd.setMessage("Progress: " + (int) progresspercent + "%");
+                        }
+                    });
+        }
     }
 }

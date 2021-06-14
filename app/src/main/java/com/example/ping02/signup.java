@@ -92,12 +92,12 @@ public class signup extends AppCompatActivity implements DatePickerDialog.OnDate
             public void onClick(View v) {
                 String txt_fname=fname.getText().toString();
                 String txt_lname=lname.getText().toString();
-                //String txt_dob=dateText.getText().toString();
+                String txt_dob=dateText.getText().toString();
                 String txt_email=email.getText().toString();
                 String txt_newpassword=new_password.getText().toString();
                 String txt_conpassword=con_password.getText().toString();
 
-                if(TextUtils.isEmpty(txt_fname) || TextUtils.isEmpty(txt_lname) || TextUtils.isEmpty(txt_email)
+                if(TextUtils.isEmpty(txt_fname) || TextUtils.isEmpty(txt_lname) || TextUtils.isEmpty(txt_dob) || TextUtils.isEmpty(txt_email)
                         || TextUtils.isEmpty(txt_newpassword) || TextUtils.isEmpty(txt_conpassword)){
                     Toast.makeText(signup.this, "All fields are required", Toast.LENGTH_SHORT).show();
                 }else if(txt_newpassword.length()<8){
@@ -105,7 +105,7 @@ public class signup extends AppCompatActivity implements DatePickerDialog.OnDate
                 }else if(!txt_conpassword.equals(txt_newpassword)){
                     Toast.makeText(signup.this, "Passwords are not matching!", Toast.LENGTH_SHORT).show();
                 }else {
-                    register(txt_fname,txt_lname,txt_email,txt_conpassword);
+                    register(txt_fname,txt_lname,txt_dob,txt_email,txt_conpassword);
                 }
             }
         });
@@ -196,7 +196,7 @@ public class signup extends AppCompatActivity implements DatePickerDialog.OnDate
     public void onPointerCaptureChanged(boolean hasCapture) {
     }
 
-    private void register(String fname, String lname, String email, String password){
+    private void register(String fname, String lname, String dateText, String email, String password){
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -217,15 +217,13 @@ public class signup extends AppCompatActivity implements DatePickerDialog.OnDate
 
                             String userid=firebaseUser.getUid();
 
-
-
                             reference= FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
                             HashMap<String, String> hashMap=new HashMap<>();
                             hashMap.put("Id",userid);
                             hashMap.put("Firstname",fname);
                             hashMap.put("Lastname",lname);
-                            // hashMap.put("Date of Birth",dateText);
+                            hashMap.put("Date of Birth",dateText);
                             hashMap.put("Email",email);
                             hashMap.put("Password",password);
                             hashMap.put("ImageURL","default");
