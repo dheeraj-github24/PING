@@ -132,7 +132,6 @@ public class settings extends AppCompatActivity {
                 User user=snapshot.getValue(User.class);
                 fname.setText(user.getFirstname());
                 email.setText(user.getEmail());
-                infoDesignation.setText(user.getDesignation());
                 if(user.getImageURL().equals("default")){
                     profilepic.setImageResource(R.mipmap.ic_launcher);
                 }else {
@@ -149,9 +148,9 @@ public class settings extends AppCompatActivity {
     }
 
     private void updateDesignation(String txt_designation) {
+        reference= FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
         HashMap<String, Object> map=new HashMap<>();
         map.put("Designation",txt_designation);
-        reference= FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
         reference.updateChildren(map);
         Snackbar.make(findViewById(android.R.id.content), "Designation Updated!", Snackbar.LENGTH_LONG).show();
     }

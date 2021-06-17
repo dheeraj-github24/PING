@@ -25,7 +25,6 @@ public class User_Adapter extends FirebaseRecyclerAdapter<User,User_Adapter.myvi
     @Override
     protected void onBindViewHolder(@NonNull myviewholder holder, int position, @NonNull User user) {
         holder.users.setText(user.getFirstname());
-        holder.users.setText(user.getDesignation());
         if(user.getImageURL().equals("default")){
             holder.circleImageView.setImageResource(R.mipmap.ic_launcher);
         }else{
@@ -41,17 +40,17 @@ public class User_Adapter extends FirebaseRecyclerAdapter<User,User_Adapter.myvi
         return new myviewholder(view);
     }
 
-    class myviewholder extends RecyclerView.ViewHolder{
+    static class myviewholder extends RecyclerView.ViewHolder{
 
         CircleImageView circleImageView;
         TextView users;
-        TextView designation;
+        //TextView designation;
 
         public myviewholder(@NonNull View itemView) {
             super(itemView);
             circleImageView=itemView.findViewById(R.id.profilepic);
             users=itemView.findViewById(R.id.users);
-            designation=itemView.findViewById(R.id.designation);
+           // designation=itemView.findViewById(R.id.designation);
         }
     }
 }
