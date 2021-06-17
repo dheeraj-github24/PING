@@ -11,12 +11,10 @@
     tools:context="com.example.ping02.searchforglobal">
 
 
-
-
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/lv1"
+        android:id="@+id/recyclerview"
         android:divider="#ad5"
         android:dividerHeight="2dp"
         android:layout_below="@+id/searchView"/>

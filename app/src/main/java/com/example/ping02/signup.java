@@ -227,6 +227,7 @@ public class signup extends AppCompatActivity implements DatePickerDialog.OnDate
                             hashMap.put("Email",email);
                             hashMap.put("Password",password);
                             hashMap.put("ImageURL","default");
+                            hashMap.put("Designation","default");
 
                             reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

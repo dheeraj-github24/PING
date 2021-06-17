@@ -5,12 +5,14 @@ public class User {
     private String Firstname;
     private String ImageURL;
     private String Email;
+    private String Designation;
 
-    public User(String id, String Firstname, String imageURL, String Email) {
+    public User(String id, String Firstname, String imageURL, String Email, String designation) {
         this.Id = id;
         this.Firstname = Firstname;
         this.ImageURL = imageURL;
         this.Email=Email;
+        this.Designation=designation;
     }
 
     public User() {
@@ -47,5 +49,13 @@ public class User {
 
     public void setEmail(String email) {
         Email = email;
+    }
+
+    public String getDesignation() {
+        return Designation;
+    }
+
+    public void setDesignation(String designation) {
+        Designation = designation;
     }
 }

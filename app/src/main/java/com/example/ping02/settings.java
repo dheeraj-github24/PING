@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.ping02.Adapter.User_Adapter;
 import com.example.ping02.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -42,6 +45,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.orhanobut.dialogplus.DialogPlus;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -67,15 +71,13 @@ public class settings extends AppCompatActivity {
     FirebaseUser firebaseUser;
     DatabaseReference reference;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        designationedit=findViewById(R.id.designationedit);
-        infoDesignation=findViewById(R.id.info_designation);
-        profilepic=findViewById(R.id.profilepicture);
-        UpdateDesignation=findViewById(R.id.UpdateButton);
+
         fname=findViewById(R.id.info_fullname);
         email=findViewById(R.id.info_email);
         
@@ -86,6 +88,7 @@ public class settings extends AppCompatActivity {
         String userid=firebaseUser.getUid();
         reference= FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
+        profilepic=findViewById(R.id.profilepicture);
         profilepic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,10 +106,23 @@ public class settings extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
             }
         });
+
+        designationedit=findViewById(R.id.designationedit);
+        infoDesignation=findViewById(R.id.info_designation);
         designationedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 infoDesignation.setVisibility(View.VISIBLE);
+                showSoftKeyboard(designationedit);
+            }
+        });
+
+        UpdateDesignation=findViewById(R.id.UpdateButton);
+        UpdateDesignation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String txt_designation=infoDesignation.getText().toString();
+                updateDesignation(txt_designation);
             }
         });
 
@@ -116,6 +132,7 @@ public class settings extends AppCompatActivity {
                 User user=snapshot.getValue(User.class);
                 fname.setText(user.getFirstname());
                 email.setText(user.getEmail());
+                infoDesignation.setText(user.getDesignation());
                 if(user.getImageURL().equals("default")){
                     profilepic.setImageResource(R.mipmap.ic_launcher);
                 }else {
@@ -129,6 +146,23 @@ public class settings extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void updateDesignation(String txt_designation) {
+        HashMap<String, Object> map=new HashMap<>();
+        map.put("Designation",txt_designation);
+        reference= FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+        reference.updateChildren(map);
+        Snackbar.make(findViewById(android.R.id.content), "Designation Updated!", Snackbar.LENGTH_LONG).show();
+    }
+
+    private void showSoftKeyboard(ImageView designationedit) {
+        if(designationedit.requestFocus()){
+
+            InputMethodManager imm=(InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(designationedit,InputMethodManager.SHOW_IMPLICIT);
+        }
     }
 
 
@@ -176,7 +210,7 @@ public class settings extends AppCompatActivity {
                                     }
                                 }
                             });
-                            Snackbar.make(findViewById(android.R.id.content), "Imgae Uploaded!", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(findViewById(android.R.id.content), "Image Uploaded!", Snackbar.LENGTH_LONG).show();
                             pd.dismiss();
                         }
                     })
