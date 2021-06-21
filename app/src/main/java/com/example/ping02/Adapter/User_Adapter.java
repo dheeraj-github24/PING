@@ -1,5 +1,7 @@
 package com.example.ping02.Adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.ping02.Model.User;
 import com.example.ping02.R;
+import com.example.ping02.chatinterface;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class User_Adapter extends FirebaseRecyclerAdapter<User,User_Adapter.myviewholder> {
+        private Context context;
 
     public User_Adapter(@NonNull FirebaseRecyclerOptions<User> options) {
         super(options);
@@ -30,6 +34,16 @@ public class User_Adapter extends FirebaseRecyclerAdapter<User,User_Adapter.myvi
         }else{
             Glide.with(holder.circleImageView.getContext()).load(user.getImageURL()).into(holder.circleImageView);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, chatinterface.class);
+                intent.putExtra("Id",user.getid());
+                context.startActivity(intent);
+
+            }
+        });
 
     }
 

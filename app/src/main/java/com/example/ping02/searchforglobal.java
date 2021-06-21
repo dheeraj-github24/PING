@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.widget.SearchView;
 
@@ -18,6 +19,7 @@ public class searchforglobal extends AppCompatActivity {
     private RecyclerView rv;
     private SearchView sv;
     private User_Adapter user_adapter;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,6 @@ public class searchforglobal extends AppCompatActivity {
         rv=findViewById(R.id.recyclerview);
         rv.setLayoutManager(new LinearLayoutManager(this));
 
-
         FirebaseRecyclerOptions<User> options =
                 new FirebaseRecyclerOptions.Builder<User>()
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("Users"), User.class)
@@ -35,7 +36,6 @@ public class searchforglobal extends AppCompatActivity {
 
         user_adapter=new User_Adapter(options);
         rv.setAdapter(user_adapter);
-
 
        sv=findViewById(R.id.searchView);
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener(){

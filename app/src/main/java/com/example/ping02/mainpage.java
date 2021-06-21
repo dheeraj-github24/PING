@@ -2,15 +2,19 @@ package com.example.ping02;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.ping02.Adapter.User_Adapter;
 import com.example.ping02.Model.User;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,6 +33,10 @@ public class mainpage extends AppCompatActivity {
     private CircleImageView prof_img;
     private TextView username;
     private FloatingActionButton search;
+    private FloatingActionButton chat;
+
+    private RecyclerView rv;
+    private User_Adapter user_adapter;
 
     
     FirebaseAuth mAuth;
@@ -40,12 +48,25 @@ public class mainpage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainpage);
 
-
         settings = findViewById(R.id.settingsfbutton);
         settings.setOnClickListener(v -> showsettingspage());
         prof_img=findViewById(R.id.profilepicturechatdrawer);
         username=findViewById(R.id.usernameautologin);
-                
+        chat=findViewById(R.id.floatingActionButton2);
+        chat.setOnClickListener(v -> showchatinterface());
+
+        rv=findViewById(R.id.recyclerview);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+
+
+        FirebaseRecyclerOptions<User> options =
+                new FirebaseRecyclerOptions.Builder<User>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Users"), User.class)
+                        .build();
+
+        user_adapter=new User_Adapter(options);
+        rv.setAdapter(user_adapter);
+
         search=findViewById(R.id.floatingActionButton);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,14 +75,6 @@ public class mainpage extends AppCompatActivity {
             }
         });
 
-
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showsearchbar();
-            }
-
-        });
         firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
        databaseReference= FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
