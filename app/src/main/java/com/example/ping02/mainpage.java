@@ -52,8 +52,6 @@ public class mainpage extends AppCompatActivity {
         settings.setOnClickListener(v -> showsettingspage());
         prof_img=findViewById(R.id.profilepicturechatdrawer);
         username=findViewById(R.id.usernameautologin);
-        chat=findViewById(R.id.floatingActionButton2);
-        chat.setOnClickListener(v -> showchatinterface());
 
         /*rv=findViewById(R.id.recyclerview);
         rv.setLayoutManager(new LinearLayoutManager(this));

@@ -38,6 +38,7 @@ public class chatinterface extends AppCompatActivity {
     private EditText textbar;
     private Button send;
     private Button sendfile;
+    private String userid;
 
     Intent intent;
     FirebaseUser fuser;
@@ -65,8 +66,9 @@ public class chatinterface extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         intent=getIntent();
-        final String userid=intent.getStringExtra("Id");
+        userid=intent.getStringExtra("Id");
         fuser= FirebaseAuth.getInstance().getCurrentUser();
+        reference= FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +83,7 @@ public class chatinterface extends AppCompatActivity {
             }
         });
 
-        reference= FirebaseDatabase.getInstance().getReference("Users").child(userid);
+
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -106,11 +108,29 @@ public class chatinterface extends AppCompatActivity {
 
     private void sendMessage(String sender, String receiver, String msg) {
         reference=FirebaseDatabase.getInstance().getReference();
+
         HashMap<String, Object> map=new HashMap<>();
         map.put("Sender",sender);
         map.put("Receiver",receiver);
         map.put("Message",msg);
         reference.child("Intel").push().setValue(map);
+
+       /* DatabaseReference  chatRef=FirebaseDatabase.getInstance().getReference("Intellist")
+                .child(fuser.getUid())
+                .child(userid);
+        chatRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(!snapshot.exists()){
+                    chatRef.child("Id").setValue(userid);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });*/
     }
 
     private void readMessage(String myid, String userid){

@@ -7,6 +7,15 @@
     tools:context=".mainpage"
     android:background="@drawable/mainpage_bgbgbgbg">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="41dp"
+        android:layout_height="100dp"
+        android:id="@+id/recyclerview"
+        tools:ignore="MissingConstraints"
+        android:divider="#ad5"
+        android:dividerHeight="2dp"
+        android:layout_below="@+id/searchView"/>
+
     <TextView
         android:id="@+id/textView10"
         android:layout_width="412dp"
@@ -102,20 +111,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.103" />
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:backgroundTint="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.954"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView10"
-        app:layout_constraintVertical_bias="0.874"
-        app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
