@@ -19,7 +19,6 @@ public class searchforglobal extends AppCompatActivity {
     private RecyclerView rv;
     private SearchView sv;
     private User_Adapter user_adapter;
-    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

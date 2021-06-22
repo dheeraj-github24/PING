@@ -35,17 +35,17 @@ public class User_Adapter extends FirebaseRecyclerAdapter<User,User_Adapter.myvi
             Glide.with(holder.circleImageView.getContext()).load(user.getImageURL()).into(holder.circleImageView);
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(context, chatinterface.class);
+        holder.itemView.setOnClickListener(v -> {
+            {
+                Intent intent=new Intent(v.getContext(), chatinterface.class);
                 intent.putExtra("Id",user.getid());
-                context.startActivity(intent);
+                v.getContext().startActivity(intent);
 
             }
         });
 
     }
+
 
     @NonNull
     @Override

@@ -7,15 +7,6 @@
     tools:context=".mainpage"
     android:background="@drawable/mainpage_bgbgbgbg">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="41dp"
-        android:layout_height="100dp"
-        android:id="@+id/recyclerview"
-        tools:ignore="MissingConstraints"
-        android:divider="#ad5"
-        android:dividerHeight="2dp"
-        android:layout_below="@+id/searchView"/>
-
     <TextView
         android:id="@+id/textView10"
         android:layout_width="412dp"

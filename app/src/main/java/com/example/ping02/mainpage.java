@@ -55,7 +55,7 @@ public class mainpage extends AppCompatActivity {
         chat=findViewById(R.id.floatingActionButton2);
         chat.setOnClickListener(v -> showchatinterface());
 
-        rv=findViewById(R.id.recyclerview);
+        /*rv=findViewById(R.id.recyclerview);
         rv.setLayoutManager(new LinearLayoutManager(this));
 
 
@@ -65,7 +65,7 @@ public class mainpage extends AppCompatActivity {
                         .build();
 
         user_adapter=new User_Adapter(options);
-        rv.setAdapter(user_adapter);
+        rv.setAdapter(user_adapter);*/
 
         search=findViewById(R.id.floatingActionButton);
         search.setOnClickListener(new View.OnClickListener() {
