@@ -165,18 +165,21 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.533" />
 
-        <ImageButton
+         <ImageView
             android:id="@+id/profilepicture"
             android:layout_width="118dp"
             android:layout_height="127dp"
+            android:background="#00FFFFFF"
+            android:fadingEdge="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.068"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.283"
+            app:layout_constraintVertical_bias="0.286"
+            tools:ignore="MissingConstraints"
             tools:srcCompat="@tools:sample/avatars" />
-
+        
         <TextView
             android:id="@+id/info_email"
             android:layout_width="200dp"
