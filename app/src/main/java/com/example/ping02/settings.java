@@ -57,7 +57,7 @@ public class settings extends AppCompatActivity {
     private ImageView designationedit;
     private EditText infoDesignation;
     private Button logout;
-    private ImageButton profilepic;
+    private ImageView profilepic;
     private Button UpdateDesignation;
     private TextView fname;
     private TextView email;
