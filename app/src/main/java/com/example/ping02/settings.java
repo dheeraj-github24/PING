@@ -130,8 +130,13 @@ public class settings extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user=snapshot.getValue(User.class);
-                fname.setText(user.getFirstname());
+                fname.setText(user.getFirstname()+" "+user.getLastname());
                 email.setText(user.getEmail());
+                if(user.getDesignation().equals("")){
+                    infoDesignation.setText("");
+                }else {
+                    infoDesignation.setText(user.getDesignation());
+                }
                 if(user.getImageURL().equals("default")){
                     profilepic.setImageResource(R.mipmap.ic_launcher);
                 }else {

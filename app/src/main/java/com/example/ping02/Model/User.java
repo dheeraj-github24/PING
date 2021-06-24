@@ -3,13 +3,15 @@ package com.example.ping02.Model;
 public class User {
     private String Id;
     private String Firstname;
+    private String Lastname;
     private String ImageURL;
     private String Email;
     private String Designation;
 
-    public User(String id, String Firstname, String imageURL, String Email, String designation) {
+    public User(String id, String Firstname,String Lastname, String imageURL, String Email, String designation) {
         this.Id = id;
         this.Firstname = Firstname;
+        this.Lastname=Lastname;
         this.ImageURL = imageURL;
         this.Email=Email;
         this.Designation=designation;
@@ -33,6 +35,14 @@ public class User {
 
     public void setFirstname(String Firstname) {
         this.Firstname = Firstname;
+    }
+
+    public String getLastname() {
+        return Lastname;
+    }
+
+    public void setLastname(String lastname) {
+        Lastname = lastname;
     }
 
     public String getImageURL() {

@@ -17,54 +17,68 @@ import com.example.ping02.chatinterface;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
+import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class User_Adapter extends FirebaseRecyclerAdapter<User,User_Adapter.myviewholder> {
-        private Context context;
+public class User_Adapter extends RecyclerView.Adapter<User_Adapter.ViewHolder> {
+    private Context mContext;
+    private List<User> mUsers;
 
-    public User_Adapter(@NonNull FirebaseRecyclerOptions<User> options) {
-        super(options);
+    public User_Adapter(Context context, List<User> user){
+        this.mContext=context;
+        this.mUsers=user;
     }
-
-    @Override
-    protected void onBindViewHolder(@NonNull myviewholder holder, int position, @NonNull User user) {
-        holder.users.setText(user.getFirstname());
-        if(user.getImageURL().equals("default")){
-            holder.circleImageView.setImageResource(R.mipmap.ic_launcher);
-        }else{
-            Glide.with(holder.circleImageView.getContext()).load(user.getImageURL()).into(holder.circleImageView);
-        }
-
-        holder.itemView.setOnClickListener(v -> {
-            {
-                Intent intent=new Intent(v.getContext(), chatinterface.class);
-                intent.putExtra("Id",user.getid());
-                v.getContext().startActivity(intent);
-
-            }
-        });
-
-    }
-
 
     @NonNull
     @Override
-    public myviewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.user_item,parent,false);
-        return new myviewholder(view);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view=LayoutInflater.from(mContext).inflate(R.layout.user_item,parent,false);
+        return new User_Adapter.ViewHolder(view);
     }
 
-    static class myviewholder extends RecyclerView.ViewHolder{
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        User user=mUsers.get(position);
+        holder.username.setText(user.getFirstname());
+        if(user.getDesignation().equals("")){
+            holder.designation.setText("");
+        }else {
+            holder.designation.setText(user.getDesignation());
+        }
+        if(user.getImageURL().equals("default")){
+            holder.profpic.setImageResource(R.mipmap.ic_launcher);
+        }else {
+            Glide.with(mContext).load(user.getImageURL()).into(holder.profpic);
+        }
 
-        CircleImageView circleImageView;
-        TextView users;
-        //TextView designation;
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(mContext,chatinterface.class);
+                intent.putExtra("Id",user.getid());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+            }
+        });
+    }
 
-        public myviewholder(@NonNull View itemView) {
+    @Override
+    public int getItemCount() {
+        return mUsers.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        public TextView username;
+        public TextView designation;
+        public CircleImageView profpic;
+
+        public ViewHolder(View itemView){
             super(itemView);
-            circleImageView=itemView.findViewById(R.id.profilepic);
-            users=itemView.findViewById(R.id.users);
-           // designation=itemView.findViewById(R.id.designation);
+
+            username=itemView.findViewById(R.id.users);
+            designation=itemView.findViewById(R.id.designation);
+            profpic=itemView.findViewById(R.id.profilepic);
         }
     }
 }
