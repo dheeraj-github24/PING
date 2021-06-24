@@ -157,7 +157,7 @@
             android:maxLength="50"
             android:maxLines="1"
             android:textColor="#FFFFFF"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.39"

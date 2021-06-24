@@ -12,25 +12,26 @@
         android:src="@mipmap/ic_launcher"/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/users"
-        android:textColor="@color/purple_200"
-        android:layout_toRightOf="@+id/profilepic"
-        android:layout_toEndOf="@id/profilepic"
-        android:layout_marginLeft="10dp"
-        android:layout_centerVertical="true"
-        android:textSize="18sp"/>
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/designation"
-        android:textColor="@color/purple_200"
-        android:layout_toRightOf="@+id/profilepic"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
         android:layout_toEndOf="@id/profilepic"
+        android:layout_toRightOf="@+id/profilepic"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/designation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="100dp"
-        android:textSize="15sp"/>
+        android:layout_toEndOf="@id/profilepic"
+        android:layout_toRightOf="@+id/profilepic"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
 
 
 
