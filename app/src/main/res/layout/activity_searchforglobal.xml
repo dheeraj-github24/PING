@@ -19,11 +19,12 @@
         android:dividerHeight="2dp"
         android:layout_below="@+id/searchView"/>
 
-    <SearchView
+    <EditText
         android:id="@+id/searchView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Search Here"
+        android:layout_margin="5dp"
+        android:hint="Search Here"
         android:iconifiedByDefault="false"
         android:layout_alignParentTop="true"
         />
