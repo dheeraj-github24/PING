@@ -4,6 +4,14 @@ public class Intel {
     private String Sender;
     private String Receiver;
     private String Message;
+    private Long timestamp;
+
+    public Intel(String sender, String receiver, String message, Long timestamp) {
+        Sender = sender;
+        Receiver = receiver;
+        Message = message;
+        timestamp=timestamp;
+    }
 
     public Intel(String sender, String receiver, String message) {
         Sender = sender;
@@ -36,5 +44,13 @@ public class Intel {
 
     public void setMessage(String message) {
         Message = message;
+    }
+
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
     }
 }

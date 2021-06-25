@@ -21,6 +21,10 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -32,7 +36,7 @@ public class Message_Adapter extends RecyclerView.Adapter<Message_Adapter.myview
 
     private List<Intel> mIntel;
     private Context mContext;
-    ;
+    Date date=new Date();
 
     FirebaseUser fuser;
 
@@ -60,6 +64,9 @@ public class Message_Adapter extends RecyclerView.Adapter<Message_Adapter.myview
     public void onBindViewHolder(@NonNull myviewholder holder, int position) {
         Intel intel=mIntel.get(position);
         holder.show_message.setText(intel.getMessage());
+        SimpleDateFormat formatter= new SimpleDateFormat("HH:mm");
+        Date date = new Date(intel.getTimestamp());
+        holder.timestamp.setText(formatter.format(date));
     }
 
     @Override
@@ -71,12 +78,14 @@ public class Message_Adapter extends RecyclerView.Adapter<Message_Adapter.myview
 
         CircleImageView circleImageView;
         public TextView show_message;
+        public TextView timestamp;
 
 
         public myviewholder(@NonNull View itemView) {
             super(itemView);
             circleImageView=itemView.findViewById(R.id.profilepic);
             show_message=itemView.findViewById(R.id.show_message);
+            timestamp=itemView.findViewById(R.id.timestamp);
         }
     }
 

@@ -1,11 +1,13 @@
 package com.example.ping02;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.example.ping02.Adapter.Message_Adapter;
 import com.example.ping02.Model.Intel;
 import com.example.ping02.Model.User;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,8 +28,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -48,6 +54,11 @@ public class chatinterface extends AppCompatActivity {
     List<Intel> mIntel;
     RecyclerView recyclerView;
 
+    TextView textFile;
+
+    private static final int PICKFILE_RESULT_CODE = 1;
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +94,6 @@ public class chatinterface extends AppCompatActivity {
             }
         });
 
-
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -106,31 +116,25 @@ public class chatinterface extends AppCompatActivity {
 
     }
 
+
     private void sendMessage(String sender, String receiver, String msg) {
         reference=FirebaseDatabase.getInstance().getReference();
 
-        HashMap<String, Object> map=new HashMap<>();
+        final Intel intel=new Intel(fuser.getUid(),userid,msg);
+        intel.setTimestamp(new Date().getTime());
+
+       /* HashMap<String, Object> map=new HashMap<>();
         map.put("Sender",sender);
         map.put("Receiver",receiver);
         map.put("Message",msg);
-        reference.child("Intel").push().setValue(map);
-
-       /* DatabaseReference  chatRef=FirebaseDatabase.getInstance().getReference("Intellist")
-                .child(fuser.getUid())
-                .child(userid);
-        chatRef.addValueEventListener(new ValueEventListener() {
+        map.put("Timestamp", intel);*/
+        reference.child("Intel").push().setValue(intel).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(!snapshot.exists()){
-                    chatRef.child("Id").setValue(userid);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onSuccess(Void aVoid) {
 
             }
-        });*/
+        });
+
     }
 
     private void readMessage(String myid, String userid){
