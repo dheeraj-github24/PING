@@ -50,7 +50,7 @@ public class Intel {
         return timestamp;
     }
 
-    public String setTimestamp(long timestamp) {
+    public Long setTimestamp(long timestamp) {
         this.timestamp = timestamp;
         return null;
     }

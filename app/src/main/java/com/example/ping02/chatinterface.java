@@ -87,7 +87,7 @@ public class chatinterface extends AppCompatActivity {
             public void onClick(View v) {
                 String msg=textbar.getText().toString();
                 final Intel intel=new Intel(fuser.getUid(),userid,msg);
-                String time = intel.setTimestamp(Long.parseLong(String.valueOf(new Date().getTime())));
+                Long time = intel.setTimestamp(new Date().getTime());
                 if(!msg.equals("")){
                     sendMessage(fuser.getUid(),userid,msg,time);
                 }else {
@@ -120,7 +120,7 @@ public class chatinterface extends AppCompatActivity {
     }
 
 
-    private void sendMessage(String sender, String receiver, String msg,String time) {
+    private void sendMessage(String sender, String receiver, String msg, Long time) {
         reference=FirebaseDatabase.getInstance().getReference();
 
         HashMap<String, Object> map=new HashMap<>();
