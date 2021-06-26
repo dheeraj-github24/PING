@@ -46,12 +46,12 @@ public class Intel {
         Message = message;
     }
 
-    public long getTimestamp() {
+    public Long getTimestamp(Long timestamp) {
         return timestamp;
     }
 
     public Long setTimestamp(long timestamp) {
         this.timestamp = timestamp;
-        return null;
+        return timestamp;
     }
 }
