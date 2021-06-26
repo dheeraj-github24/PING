@@ -33,6 +33,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -85,8 +86,10 @@ public class chatinterface extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String msg=textbar.getText().toString();
+                final Intel intel=new Intel(fuser.getUid(),userid,msg);
+                String time = intel.setTimestamp(Long.parseLong(String.valueOf(new Date().getTime())));
                 if(!msg.equals("")){
-                    sendMessage(fuser.getUid(),userid,msg);
+                    sendMessage(fuser.getUid(),userid,msg,time);
                 }else {
                     Toast.makeText(chatinterface.this, "Message cannot be empty", Toast.LENGTH_SHORT).show();
                 }
@@ -117,25 +120,20 @@ public class chatinterface extends AppCompatActivity {
     }
 
 
-    private void sendMessage(String sender, String receiver, String msg) {
+    private void sendMessage(String sender, String receiver, String msg,String time) {
         reference=FirebaseDatabase.getInstance().getReference();
 
-        final Intel intel=new Intel(fuser.getUid(),userid,msg);
-        intel.setTimestamp(new Date().getTime());
-
-       /* HashMap<String, Object> map=new HashMap<>();
+        HashMap<String, Object> map=new HashMap<>();
         map.put("Sender",sender);
         map.put("Receiver",receiver);
         map.put("Message",msg);
-        map.put("Timestamp", intel);*/
-        reference.child("Intel").push().setValue(intel).addOnSuccessListener(new OnSuccessListener<Void>() {
+        map.put("Timestamp", time);
+        reference.child("Intel").push().setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
 
             }
-        });
-
-    }
+        });}
 
     private void readMessage(String myid, String userid){
         mIntel=new ArrayList<>();

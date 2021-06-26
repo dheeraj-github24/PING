@@ -64,7 +64,7 @@ public class Message_Adapter extends RecyclerView.Adapter<Message_Adapter.myview
     public void onBindViewHolder(@NonNull myviewholder holder, int position) {
         Intel intel=mIntel.get(position);
         holder.show_message.setText(intel.getMessage());
-        SimpleDateFormat formatter= new SimpleDateFormat("HH:mm");
+        SimpleDateFormat formatter= new SimpleDateFormat("dd/MM HH:mm");
         Date date = new Date(intel.getTimestamp());
         holder.timestamp.setText(formatter.format(date));
     }
