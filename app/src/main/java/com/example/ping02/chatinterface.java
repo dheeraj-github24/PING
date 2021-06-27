@@ -19,6 +19,12 @@ import com.bumptech.glide.Glide;
 import com.example.ping02.Adapter.Message_Adapter;
 import com.example.ping02.Model.Intel;
 import com.example.ping02.Model.User;
+import com.example.ping02.Notifications.APIService;
+import com.example.ping02.Notifications.Client;
+import com.example.ping02.Notifications.Data;
+import com.example.ping02.Notifications.Response;
+import com.example.ping02.Notifications.Sender;
+import com.example.ping02.Notifications.Token;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,7 +32,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -37,6 +45,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class chatinterface extends AppCompatActivity {
 
@@ -55,7 +65,9 @@ public class chatinterface extends AppCompatActivity {
     List<Intel> mIntel;
     RecyclerView recyclerView;
 
-    TextView textFile;
+    String mUid;
+    APIService apiService;
+    boolean notify=false;
 
     private static final int PICKFILE_RESULT_CODE = 1;
 
@@ -77,14 +89,18 @@ public class chatinterface extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        apiService= Client.getRetrofit("https://fcm.googleapis.com").create(APIService.class);
+
         intent=getIntent();
         userid=intent.getStringExtra("Id");
         fuser= FirebaseAuth.getInstance().getCurrentUser();
+        mUid=fuser.getUid();
         reference= FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                notify=true;
                 String msg=textbar.getText().toString();
                 final Intel intel=new Intel(fuser.getUid(),userid,msg);
                 Long time = intel.setTimestamp(new Date().getTime());
@@ -117,7 +133,9 @@ public class chatinterface extends AppCompatActivity {
             }
         });
 
+        updateToken(FirebaseInstanceId.getInstance().getToken());
     }
+
 
 
     private void sendMessage(String sender, String receiver, String msg, Long time) {
@@ -133,7 +151,58 @@ public class chatinterface extends AppCompatActivity {
             public void onSuccess(Void aVoid) {
 
             }
-        });}
+        });
+        String info=msg;
+        DatabaseReference database=FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user=snapshot.getValue(User.class);
+                if(notify){
+                    sendNotification(receiver,user.getFirstname(),msg);
+                }
+                notify=false;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void sendNotification(String receiver, String firstname, String msg) {
+        DatabaseReference allTokens=FirebaseDatabase.getInstance().getReference("Tokens");
+        Query query=allTokens.orderByKey().equalTo(receiver);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snapshot1:snapshot.getChildren()){
+                    Token token=snapshot1.getValue(Token.class);
+                    Data data=new Data(fuser.getUid(),firstname+":"+msg,"New Message ",userid,R.mipmap.ic_launcher);
+
+                    Sender sender=new Sender(data,token.getToken());
+                    apiService.sendNotification(sender)
+                    .enqueue(new Callback<Response>() {
+                        @Override
+                        public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                            Toast.makeText(chatinterface.this, ""+response.message(), Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(Call<Response> call, Throwable t) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     private void readMessage(String myid, String userid){
         mIntel=new ArrayList<>();
@@ -159,5 +228,11 @@ public class chatinterface extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void updateToken(String token){
+        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Tokens");
+        Token mToken=new Token(token);
+        ref.child(mUid).setValue(mToken);
     }
 }
