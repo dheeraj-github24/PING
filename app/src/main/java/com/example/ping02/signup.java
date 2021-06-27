@@ -67,7 +67,6 @@ public class signup extends AppCompatActivity implements DatePickerDialog.OnDate
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        createRequest();
 
         fname=findViewById(R.id.editTextTextPersonName);
         lname=findViewById(R.id.editTextTextPersonName2);
@@ -112,24 +111,9 @@ public class signup extends AppCompatActivity implements DatePickerDialog.OnDate
 
         GoogleSignInAccount account=GoogleSignIn.getLastSignedInAccount(this);
 
-        googlesignup=findViewById(R.id.google_signup);
-        googlesignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
 
     }
-
-    private void createRequest() {
-        GoogleSignInOptions gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient=GoogleSignIn.getClient(this,gso);
-    }
+    
 
     private void signIn(){
         Intent signInIntent=mGoogleSignInClient.getSignInIntent();
