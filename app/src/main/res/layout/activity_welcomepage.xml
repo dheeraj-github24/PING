@@ -53,15 +53,32 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="158dp"
-            android:layout_height="146dp"
-            android:src="@drawable/pg"
+            android:layout_width="20dp"
+            android:layout_height="69dp"
+            android:src="@drawable/pgonly"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.659"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.875" />
+            app:layout_constraintVertical_bias="0.799" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="170dp"
+            android:layout_height="131dp"
+            android:fontFamily="@font/nova_square"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="PING"
+            android:textColor="#000000"
+            android:textSize="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.448"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.836" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
