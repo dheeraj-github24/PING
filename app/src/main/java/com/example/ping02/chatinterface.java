@@ -55,11 +55,12 @@ public class chatinterface extends AppCompatActivity {
     private EditText textbar;
     private Button send;
     private Button sendfile;
-    private String userid;
+   // private String userid;
 
     Intent intent;
     FirebaseUser fuser;
     DatabaseReference reference;
+    ValueEventListener seenListener;
 
     Message_Adapter message_adapter;
     List<Intel> mIntel;
@@ -92,7 +93,7 @@ public class chatinterface extends AppCompatActivity {
         apiService= Client.getRetrofit("https://fcm.googleapis.com").create(APIService.class);
 
         intent=getIntent();
-        userid=intent.getStringExtra("Id");
+        final String userid=intent.getStringExtra("Id");
         fuser= FirebaseAuth.getInstance().getCurrentUser();
         mUid=fuser.getUid();
         reference= FirebaseDatabase.getInstance().getReference("Users").child(userid);
@@ -121,7 +122,7 @@ public class chatinterface extends AppCompatActivity {
                 if(user.getImageURL().equals("default")){
                     profilepic.setImageResource(R.mipmap.ic_launcher);
                 }else{
-                    Glide.with(chatinterface.this).load(user.getImageURL()).into(profilepic);
+                    Glide.with(getApplicationContext()).load(user.getImageURL()).into(profilepic);
                 }
 
                 readMessage(fuser.getUid(),userid);
@@ -133,10 +134,33 @@ public class chatinterface extends AppCompatActivity {
             }
         });
 
+        seenMessage(userid);
+
         updateToken(FirebaseInstanceId.getInstance().getToken());
     }
 
+    private void seenMessage(final String userid){
+        reference=FirebaseDatabase.getInstance().getReference("Intel");
+        seenListener=reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snapshot1:snapshot.getChildren()){
+                    Intel intel=snapshot1.getValue(Intel.class);
+                    assert intel != null;
+                    if(intel.getReceiver().equals(fuser.getUid()) && intel.getSender().equals(userid)){
+                        HashMap<String,Object> seenmap=new HashMap<>();
+                        seenmap.put("isseen",true);
+                        snapshot1.getRef().updateChildren(seenmap);
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     private void sendMessage(String sender, String receiver, String msg, Long time) {
         reference=FirebaseDatabase.getInstance().getReference();
@@ -145,6 +169,7 @@ public class chatinterface extends AppCompatActivity {
         map.put("Sender",sender);
         map.put("Receiver",receiver);
         map.put("Message",msg);
+        map.put("isseen",false);
         map.put("Timestamp", time);
         reference.child("Intel").push().setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -152,7 +177,7 @@ public class chatinterface extends AppCompatActivity {
 
             }
         });
-        String info=msg;
+      /*  String info=msg;
         DatabaseReference database=FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
         database.addValueEventListener(new ValueEventListener() {
             @Override
@@ -168,10 +193,10 @@ public class chatinterface extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        });*/
     }
 
-    private void sendNotification(String receiver, String firstname, String msg) {
+   /* private void sendNotification(String receiver, String firstname, String msg) {
         DatabaseReference allTokens=FirebaseDatabase.getInstance().getReference("Tokens");
         Query query=allTokens.orderByKey().equalTo(receiver);
         query.addValueEventListener(new ValueEventListener() {
@@ -202,7 +227,7 @@ public class chatinterface extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 
     private void readMessage(String myid, String userid){
         mIntel=new ArrayList<>();

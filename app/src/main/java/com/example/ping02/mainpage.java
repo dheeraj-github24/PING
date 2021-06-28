@@ -74,6 +74,7 @@ public class mainpage extends AppCompatActivity {
                 for(DataSnapshot snapshot1:snapshot.getChildren()){
                     Intel intel=snapshot1.getValue(Intel.class);
 
+                    assert intel != null;
                     if(intel.getSender().equals(firebaseUser.getUid())){
                         userlist.add(intel.getReceiver());
                     }
@@ -108,7 +109,25 @@ public class mainpage extends AppCompatActivity {
                 if(user.getImageURL().equals("default")){
                     prof_img.setImageResource(R.mipmap.ic_launcher);
                 }else {
-                    Glide.with(mainpage.this).load(user.getImageURL()).into(prof_img);
+                    Glide.with(getApplicationContext()).load(user.getImageURL()).into(prof_img);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int unread=0;
+                for(DataSnapshot snapshot1:snapshot.getChildren()){
+                    Intel intel=snapshot1.getValue(Intel.class);
+                    if(intel.getReceiver().equals(firebaseUser.getUid())){
+
+                    }
                 }
             }
 

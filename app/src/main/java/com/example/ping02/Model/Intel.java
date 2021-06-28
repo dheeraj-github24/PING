@@ -5,6 +5,7 @@ public class Intel {
     private String Receiver;
     private String Message;
     private long timestamp;
+    private boolean isseen;
 
     public Intel(String sender, String receiver, String message, Long timestamp) {
         Sender = sender;
@@ -17,6 +18,13 @@ public class Intel {
         Sender = sender;
         Receiver = receiver;
         Message = message;
+    }
+
+    public Intel(String sender, String receiver, String message, boolean isseen) {
+        Sender = sender;
+        Receiver = receiver;
+        Message = message;
+        this.isseen = isseen;
     }
 
     public Intel() {
@@ -53,5 +61,13 @@ public class Intel {
     public Long setTimestamp(long timestamp) {
         this.timestamp = timestamp;
         return timestamp;
+    }
+
+    public boolean isIsseen() {
+        return isseen;
+    }
+
+    public void setIsseen(boolean isseen) {
+        this.isseen = isseen;
     }
 }

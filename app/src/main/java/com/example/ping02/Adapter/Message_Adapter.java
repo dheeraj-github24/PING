@@ -67,6 +67,17 @@ public class Message_Adapter extends RecyclerView.Adapter<Message_Adapter.myview
         SimpleDateFormat formatter= new SimpleDateFormat("dd/MM HH:mm a");
         Date date = new Date(intel.getTimestamp(System.currentTimeMillis()));
         holder.timestamp.setText(formatter.format(date));
+
+        if(position==mIntel.size()-1){
+            if(intel.isIsseen()){
+                holder.txt_seen.setText("Seen");
+            }else {
+                holder.txt_seen.setText("Delivered");
+            }
+        }else {
+            holder.txt_seen.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -79,6 +90,7 @@ public class Message_Adapter extends RecyclerView.Adapter<Message_Adapter.myview
         CircleImageView circleImageView;
         public TextView show_message;
         public TextView timestamp;
+        public TextView txt_seen;
 
 
         public myviewholder(@NonNull View itemView) {
@@ -86,6 +98,7 @@ public class Message_Adapter extends RecyclerView.Adapter<Message_Adapter.myview
             circleImageView=itemView.findViewById(R.id.profilepic);
             show_message=itemView.findViewById(R.id.show_message);
             timestamp=itemView.findViewById(R.id.timestamp);
+            txt_seen=(itemView).findViewById(R.id.seen);
         }
     }
 
