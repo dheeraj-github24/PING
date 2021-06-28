@@ -49,11 +49,15 @@
         android:id="@+id/timestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/card_gchat_message_other"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_toEndOf="@+id/card_gchat_message_other"
+        android:layout_toRightOf="@+id/card_gchat_message_other"
         android:text="Time"
         android:textColor="#C0C0C0"
         android:textSize="10sp"
-        android:layout_marginLeft="120dp"
-        android:layout_marginTop="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/card_gchat_message_other" />
 
