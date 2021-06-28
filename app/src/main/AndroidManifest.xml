@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ping02">
-        <activity android:name=".chatinterface"></activity>
+        <activity android:name=".chatinterfacegroupother"></activity>
+        <activity android:name=".group" />
+        <activity android:name=".chatinterface" />
         <activity android:name=".searchforglobal" />
         <activity android:name=".welcomepage" />
         <activity android:name=".settings" />
@@ -28,7 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

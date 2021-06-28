@@ -41,7 +41,6 @@ public class signup extends AppCompatActivity implements DatePickerDialog.OnDate
 
     Button dateText;
     Button submit;
-    ImageView googlesignup;
 
     EditText fname,lname,email,new_password,con_password;
     FirebaseAuth auth;
