@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ping02">
-        <activity android:name=".chatinterfacegroupother"></activity>
+        <activity android:name=".chatinterfaceimageuser"></activity>
+        <activity android:name=".chatinterfaceimageother" />
+        <activity android:name=".chatinterfacegroupother" />
         <activity android:name=".group" />
         <activity android:name=".chatinterface" />
         <activity android:name=".searchforglobal" />
@@ -31,18 +33,20 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".Notifications.FirebaseService"
+        <service
+            android:name=".Notifications.FirebaseService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_SERVICE"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_SERVICE" />
             </intent-filter>
         </service>
-        <service android:name=".Notifications.FirebaseMessaging"
+        <service
+            android:name=".Notifications.FirebaseMessaging"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
     </application>

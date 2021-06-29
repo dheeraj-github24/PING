@@ -38,23 +38,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023" />
 
+
     <TextView
         android:id="@+id/typing"
-        android:layout_width="320dp"
-        android:layout_height="60dp"
+        android:layout_width="118dp"
+        android:layout_height="18dp"
         android:fontFamily="@font/poppins_medium"
-        android:text="Typing..."
+        android:gravity="center"
+        android:text="is Typing..."
         android:textColor="#FFFFFF"
-        android:textSize="10sp"
+        android:textColorHint="#FFFFFF"
+        android:textSize="9sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.456"
         app:layout_constraintStart_toEndOf="@+id/profilepicture"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
-
-
+        app:layout_constraintVertical_bias="0.081" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chat_recyclerview"
