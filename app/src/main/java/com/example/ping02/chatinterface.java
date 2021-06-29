@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,16 +53,17 @@ import retrofit2.Callback;
 public class chatinterface extends AppCompatActivity {
 
     private TextView username;
+    private TextView typing;
     private CircleImageView profilepic;
     private EditText textbar;
     private Button send;
     private Button sendfile;
     private String userid;
-
+    private boolean typecheck=false;
 
     Intent intent;
     FirebaseUser fuser;
-    DatabaseReference reference;
+    DatabaseReference reference,typeref;
     ValueEventListener seenListener;
 
     Message_Adapter message_adapter;
@@ -135,9 +138,76 @@ public class chatinterface extends AppCompatActivity {
             }
         });
 
+        typeref=FirebaseDatabase.getInstance().getReference("Typing");
+        typing=findViewById(R.id.typing);
+        typeref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snapshot1:snapshot.getChildren()) {
+                    Intel intel = snapshot1.getValue(Intel.class);
+                    if (snapshot.child(userid).hasChild(intel.getReceiver())){
+                        typing.setVisibility(View.VISIBLE);
+                    }else {
+                        typing.setVisibility(View.INVISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        textbar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Typing();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+
         seenMessage(userid);
 
         updateToken(FirebaseInstanceId.getInstance().getToken());
+    }
+
+    private void Typing() {
+        typecheck=true;
+        typeref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    Intel intel = snapshot1.getValue(Intel.class);
+                    if (typecheck) {
+                        if (snapshot.child(intel.getReceiver()).hasChild(userid)) {
+                            typecheck=false;
+                        }else {
+                            typeref.child(intel.getReceiver()).child(userid).setValue(true);
+                            typecheck=false;
+                        }
+                    }else {
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void seenMessage(final String userid){
