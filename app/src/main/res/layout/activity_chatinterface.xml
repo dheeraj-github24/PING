@@ -42,7 +42,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chat_recyclerview"
         android:layout_width="400dp"
-        android:layout_height="588dp"
+        android:layout_height="584dp"
         app:layout_constraintBottom_toTopOf="@id/layout_gchat_chatbox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.428"

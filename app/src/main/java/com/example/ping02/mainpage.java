@@ -125,9 +125,12 @@ public class mainpage extends AppCompatActivity {
                 int unread=0;
                 for(DataSnapshot snapshot1:snapshot.getChildren()){
                     Intel intel=snapshot1.getValue(Intel.class);
-                    if(intel.getReceiver().equals(firebaseUser.getUid())){
-
+                    if(intel.getReceiver().equals(firebaseUser.getUid()) && intel.isIsseen()){
+                        unread++;
                     }
+                }
+                if(unread==0){
+
                 }
             }
 

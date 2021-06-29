@@ -55,7 +55,8 @@ public class chatinterface extends AppCompatActivity {
     private EditText textbar;
     private Button send;
     private Button sendfile;
-   // private String userid;
+    private String userid;
+
 
     Intent intent;
     FirebaseUser fuser;
@@ -93,7 +94,7 @@ public class chatinterface extends AppCompatActivity {
         apiService= Client.getRetrofit("https://fcm.googleapis.com").create(APIService.class);
 
         intent=getIntent();
-        final String userid=intent.getStringExtra("Id");
+        userid=intent.getStringExtra("Id");
         fuser= FirebaseAuth.getInstance().getCurrentUser();
         mUid=fuser.getUid();
         reference= FirebaseDatabase.getInstance().getReference("Users").child(userid);
@@ -177,7 +178,7 @@ public class chatinterface extends AppCompatActivity {
 
             }
         });
-      /*  String info=msg;
+        String info=msg;
         DatabaseReference database=FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
         database.addValueEventListener(new ValueEventListener() {
             @Override
@@ -193,10 +194,10 @@ public class chatinterface extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });*/
+        });
     }
 
-   /* private void sendNotification(String receiver, String firstname, String msg) {
+    private void sendNotification(String receiver, String firstname, String msg) {
         DatabaseReference allTokens=FirebaseDatabase.getInstance().getReference("Tokens");
         Query query=allTokens.orderByKey().equalTo(receiver);
         query.addValueEventListener(new ValueEventListener() {
@@ -227,7 +228,7 @@ public class chatinterface extends AppCompatActivity {
 
             }
         });
-    }*/
+    }
 
     private void readMessage(String myid, String userid){
         mIntel=new ArrayList<>();

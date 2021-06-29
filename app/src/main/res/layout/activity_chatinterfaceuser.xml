@@ -69,7 +69,7 @@
         android:layout_below="@+id/card_gchat_message_me"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="3dp"
         android:layout_toEndOf="@+id/timestamp"
         android:layout_toRightOf="@+id/timestamp" />
 

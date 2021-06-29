@@ -72,7 +72,7 @@ public class Message_Adapter extends RecyclerView.Adapter<Message_Adapter.myview
             if(intel.isIsseen()){
                 holder.txt_seen.setText("Seen");
             }else {
-                holder.txt_seen.setText("Delivered");
+                holder.txt_seen.setText("Sent");
             }
         }else {
             holder.txt_seen.setVisibility(View.GONE);
